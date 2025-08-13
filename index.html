@@ -27,6 +27,41 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <!-- Mobile viewport fix -->
+  <script>
+    // Simple mobile viewport fix
+    function fixMobileViewport() {
+      // Get the actual device width
+      let deviceWidth = window.screen.width || window.innerWidth;
+      let deviceHeight = window.screen.height || window.innerHeight;
+      
+      // Set viewport to match device dimensions
+      let viewport = document.querySelector('meta[name=viewport]');
+      if (viewport) {
+        let scale = 1 / window.devicePixelRatio;
+        viewport.setAttribute('content', `width=${deviceWidth}, height=${deviceHeight}, initial-scale=${scale}, user-scalable=yes`);
+      }
+      
+      // Log for debugging
+      console.log('Device dimensions:', deviceWidth, 'x', deviceHeight);
+      console.log('Device pixel ratio:', window.devicePixelRatio);
+      console.log('Window dimensions:', window.innerWidth, 'x', window.innerHeight);
+    }
+    
+    // Run on load
+    window.addEventListener('load', fixMobileViewport);
+    
+    // Run on orientation change
+    window.addEventListener('orientationchange', function() {
+      setTimeout(fixMobileViewport, 100);
+    });
+    
+    // Run immediately if mobile
+    if (window.innerWidth <= 768) {
+      fixMobileViewport();
+    }
+  </script>
+
 
   
   <style>
@@ -68,9 +103,167 @@
   border-radius: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  max-width: 800px;
+  max-width: 850px;
   width: 100%;
-  margin: 0 auto;
+  margin: auto;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .glass-card {
+    margin: auto;
+    padding: 10px !important;
+    border-radius: 1rem;
+  }
+  
+  .logo-style {
+    width: 150px !important;
+    height: 150px !important;
+  }
+  
+  #hero h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+  
+  #hero h2 {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+  
+  .btn-get-started {
+    font-size: 14px !important;
+    padding: 12px 24px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    margin: auto;
+    padding: 5px !important;
+  }
+  
+  .logo-style {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  
+  #hero h1 {
+    font-size: 24px !important;
+  }
+  
+  #hero h2 {
+    font-size: 12px !important;
+  }
+}
+
+/* Additional mobile viewport fixes */
+.hero-section {
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.logo-style {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Force mobile viewport behavior */
+@media (max-width: 768px) {
+  .hero-section {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  .glass-card {
+    transform: none !important;
+    transform-origin: top left !important;
+  }
+  
+  /* Prevent any zooming */
+  * {
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+  }
+  
+  /* Ensure proper mobile scaling */
+  body, html {
+    width: 100% !important;
+    height: 100% !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+  .hero-section {
+    height: 100vh !important;
+    min-height: -webkit-fill-available !important;
+  }
+  
+  body {
+    min-height: -webkit-fill-available !important;
+  }
+  
+  /* Prevent iOS zoom */
+  input, select, textarea {
+    font-size: 16px !important;
+    -webkit-appearance: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* Mobile viewport fix */
+@media (max-width: 768px) {
+  /* Force viewport to device width */
+  html {
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+  
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    overflow-x: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Adjust hero section for mobile */
+  .hero-section {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Ensure glass card fits mobile */
+  .glass-card {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100% - 20px) !important;
+    margin: auto;
+    transform: none !important;
+  }
+  
+  /* Prevent any unwanted scaling */
+  img, svg, canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
 }
 </style>
 
@@ -83,7 +276,7 @@
 
 
 <!-- ======= Hero Section ======= -->
-<section id="hero" class="d-flex align-items-center position-relative" style="height: 100vh; overflow: hidden;">
+<section id="hero" class="d-flex align-items-center position-relative hero-section">
   <!-- Background particles -->
   <div id="particles-js" class="position-absolute top-0 start-0 w-100 h-100 z-n1"></div>
 <div class="glass-card p-4 p-md-5 rounded-5 text-center">
@@ -93,8 +286,7 @@
     <a href="index.html" class="d-block mx-auto mb-4">
 <img src="assets/img/hero-logo.png" 
      alt="CRADLE Lab Logo" 
-     class="img-fluid logo-style"
-     style="width: 200px; height: 200px; object-fit: cover;">
+     class="img-fluid logo-style">
 
     </a>
 
