@@ -9,9 +9,24 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+html {
+  /* Ensure viewport meta tag is respected */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Force mobile viewport behavior */
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   color: #555555;
+  /* Prevent unwanted zooming on mobile */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 a {
@@ -403,6 +418,20 @@ h1, h2, h3, h4, h5, h6 {
   }
   #hero h2 {
     line-height: 22px;
+  }
+  
+  /* Ensure hero section fits mobile viewport */
+  #hero {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+  
+  /* Adjust glass card for mobile */
+  .glass-card {
+    margin: 10px;
+    padding: 20px !important;
+    max-width: calc(100% - 20px);
   }
 }
 
@@ -1703,4 +1732,106 @@ section {
   text-align: center;
   font-size: 13px;
   padding-top: 5px;
+}
+
+/*--------------------------------------------------------------
+# Mobile Optimizations
+--------------------------------------------------------------*/
+/* Basic mobile optimizations */
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection for content */
+p, h1, h2, h3, h4, h5, h6, span, div {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+@media (max-width: 768px) {
+  /* Prevent horizontal scrolling */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Ensure proper scaling for mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+  /* Improve touch targets */
+  .btn-get-started,
+  .btn-outline-light {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  /* Prevent unwanted zooming on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  
+  /* Mobile viewport behavior */
+  #hero {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* Ensure proper mobile scaling */
+  body, html {
+    width: 100% !important;
+    height: 100% !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+  
+  /* iOS Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    #hero {
+      min-height: -webkit-fill-available !important;
+    }
+    
+    body {
+      min-height: -webkit-fill-available !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small device optimizations */
+  .glass-card {
+    margin: 5px;
+    padding: 15px !important;
+  }
+  
+  /* Ensure text remains readable */
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 24px !important;
+  }
+  
+  h2 {
+    font-size: 20px !important;
+  }
 }
